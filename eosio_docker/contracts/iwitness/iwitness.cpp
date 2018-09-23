@@ -27,7 +27,7 @@ class iwitness : public eosio::contract {
       std::string   id;           // identifier
       std::string   name;         // certificate title
       std::string   description;  // certificate destription
-      std::string[] tags          // search tags
+      std::string   tags;         // search tags
       uint64_t      timestamp;    // the creation date of the certificate
 
       // primary key
@@ -44,7 +44,7 @@ class iwitness : public eosio::contract {
 
 
     /// @abi table of APPLICATIONS
-    struct application {}
+    // struct application {}
 
 
   public:
@@ -54,8 +54,8 @@ class iwitness : public eosio::contract {
     void issue_certificate( account_name  _user,
                             std::string&  _id,
                             std::string   _name,
-                            std:string    _description,
-                            std::string[] _tags ) {
+                            std::string   _description,
+                            std::string   _tags ) {
 
       // to sign the action with the given account
       require_auth( _user );
@@ -77,23 +77,23 @@ class iwitness : public eosio::contract {
 
 
     /// Apply for a certificate
-    void create_application() {
+    // void create_application() {
 
-    }
+    // }
 
-    /// Process an application as a 
-    void process_application() {
+    // /// Process an application as a 
+    // void process_application() {
 
-    }
+    // }
 
 
-    /// Verify a user's claimed credential
-    void verify_claim() {
+    // /// Verify a user's claimed credential
+    // void verify_claim() {
 
-    }
+    // }
 
 
 };
 
 // specify the contract name, and export a public action: update
-EOSIO_ABI( iwitness, (update) )
+EOSIO_ABI( iwitness, (issue_certificate) )

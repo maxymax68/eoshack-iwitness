@@ -194,13 +194,12 @@ class Index extends Component {
 		const mode = this.state.mode;
 		let content;
 		if (mode === "issuer") {
-			content = <Issuer />
+			content = <Issuer user={this.state.user}/>
 		} else if (mode === "holder") {
 			content = <Holder />
 		} else if (mode === "inspector") {
 			content = <Inspector />
 		}
-		console.log(this.state.user)
 
 		return (
 			<div>
@@ -212,37 +211,37 @@ class Index extends Component {
 						left: "0px",
 						bottom: "0px",
 						paddingBottom: "5px",
-						background: "black"
+						background: "grey"
 					}}>
-					<Tooltip title="Issuer Portal">
-						<Button
-							name="issuer"
-							color="primary"
-							className={classes.modeButton}
-							onClick={this.setMode.bind(this, "issuer")}>
-							Issuer
-						</Button>
-					</Tooltip>
 					<Tooltip title="Holder Portal">
 						<Button
 							name="holder"
-							color="primary"
+							style={{color: "darkgreen"}}
 							className={classes.modeButton}
 							onClick={this.setMode.bind(this, "holder")}>
 							Holder
 						</Button>
 					</Tooltip>
+					<Tooltip title="Issuer Portal">
+						<Button
+							name="issuer"
+							style={{color: "purple"}}
+							className={classes.modeButton}
+							onClick={this.setMode.bind(this, "issuer")}>
+							Issuer
+						</Button>
+					</Tooltip>
 					<Tooltip title="Inspector Portal">
 						<Button
 							name="inspector"
-							color="primary"
+							style={{color: "goldenrod"}}
 							className={classes.modeButton}
 							onClick={this.setMode.bind(this, "inspector")}>
 							Inspector
 						</Button>
 					</Tooltip>
 					<Typography className={classes.keyText}>
-						{ this.state.user["publicKey"] }
+						<strong>USER:</strong> { this.state.user["name"] } ({ this.state.user["publicKey"] })
 					</Typography>
 				</div>
 			</div>
