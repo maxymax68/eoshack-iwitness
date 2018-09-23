@@ -47,7 +47,7 @@ class Inspector extends Component {
 			"json": true,
 			"code": "iwitnessacc",   // contract who owns the table
 			"scope": "iwitnessacc",  // scope of the table
-			"table": "certtable",    // name of the table as specified by the contract abi
+			"table": "certificate",    // name of the table as specified by the contract abi
 			"limit": 100,
 		}).then(result => this.setState({
 			certificateList: result.rows,
@@ -73,9 +73,9 @@ class Inspector extends Component {
 		const generateCertCard = (key, timestamp, id, name, desc, tags, issuer) => (
 			<Card className={classes.card} key={key}>
 				<CardContent>
-					<Typography variant="headline">{name}</Typography>
-					<Typography variant="subtitle">{id}</Typography>
-					<Typography component="pre">{desc}</Typography>
+					<Typography className={classes.certtitle}>{name}</Typography>
+					<Typography className={classes.certid}>{id}</Typography>
+					<Typography className={classes.certdesc}>{desc}</Typography>
 					<Typography className={classes.certtags}>{tags}</Typography>
 					<Typography className={classes.issuerKey}>{issuer}</Typography>
 					<form>

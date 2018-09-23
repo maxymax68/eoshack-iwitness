@@ -19,7 +19,7 @@ class iwitness : public eosio::contract {
 
   private:
 
-    /// @abi table of CERTIFICATION TYPES
+    /// @abi table
     struct certificate {
 
       uint64_t      prim_key;     // primary key
@@ -43,7 +43,7 @@ class iwitness : public eosio::contract {
 
 
 
-    /// @abi table of APPLICATIONS
+    /// @abi table
     // struct application {}
 
 
@@ -58,7 +58,7 @@ class iwitness : public eosio::contract {
                     std::string   _tags ) {
 
       certtable obj(_self, _self); // code, scope
-
+      print("hello");
       // insert object
       obj.emplace( _self, [&]( auto& address ) {
         address.prim_key    = obj.available_primary_key();
