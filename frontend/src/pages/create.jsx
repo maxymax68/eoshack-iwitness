@@ -24,19 +24,86 @@ class Create extends Component {
 		super(props)
 		this.state = {
 
-			page: "profile",  // profile/select
+			phase: "empty",
 			user: props.user
 
 		};
-		//this.handleFormEvent = this.handleFormEvent.bind(this);
+		this.submitCertificate = this.submitCertificate.bind(this);
+	}
+
+	async submitCertificate(event) {
+
+		// stop default behaviour
+		event.preventDefault();
+
+		// collect form data
+		let id = event.target.id.value;
+		let name = event.target.name.value;
+		let description = event.target.description.value;
+
+		// prepare variables for the switch below to send transactions
+		let actionName = "";
+		let actionData = {};
+
+		// define actionName and action according to event type
+		switch (event.type) {
+		  case "submit":
+		  	this.setState({
+		  		user: this.state.user,
+		  		phase: "pending"
+		  	})
+		    actionName = "issuecert";
+		    actionData = {
+		      _user: this.state.user.name,
+		      _id: id,
+		      _name: name,
+		      _description: description,
+		      _tags: ""
+		    };
+		    break;
+		  default:
+		    return;
+		}
+
+		// eosjs function call: connect to the blockchain
+		console.log(this.state.user.privateKey);
+		const eos = Eos({keyProvider: this.state.user.privateKey});
+		const result = await eos.transaction({
+		  actions: [{
+		    account: "iwitnessacc",
+		    name: actionName,
+		    authorization: [{
+		      actor: this.state.user.name,
+		      permission: 'active',
+		    }],
+		    data: actionData,
+		  }],
+		});
+
+		if (result) {
+			this.setState({
+				phase: "success",
+				user: this.state.user
+			})
+		} else {
+			this.setState({
+				phase: "failed",
+				user: this.state.user
+			})
+		}
+		console.log(result);
+
 	}
 
 	render() {
 
+		const { classes } = this.props;
+
 		return (
 			<div>
 				<Typography>Issue a New Certificate</Typography>
-				<form>
+				{this.state.phase}
+				<form onSubmit={this.submitCertificate}>
 					<TextField
 						name="id"
 						label="ID"/>
@@ -46,7 +113,13 @@ class Create extends Component {
 					<TextField
 						name="description"
 						label="Certificate Description"/>
-					<Button>Submit</Button>
+					<Button
+		              variant="contained"
+		              color="primary"
+		              className={classes.formButton}
+		              type="submit">
+		              Create Certificate
+		            </Button>
 				</form>
 			</div>
 		)

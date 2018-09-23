@@ -51,14 +51,11 @@ class iwitness : public eosio::contract {
     using contract::contract;
 
     /// Issue a new type of certificate
-    void issue_certificate( account_name  _user,
-                            std::string&  _id,
-                            std::string   _name,
-                            std::string   _description,
-                            std::string   _tags ) {
-
-      // to sign the action with the given account
-      require_auth( _user );
+    void issuecert( account_name  _user,
+                    std::string&  _id,
+                    std::string   _name,
+                    std::string   _description,
+                    std::string   _tags ) {
 
       certtable obj(_self, _self); // code, scope
 
@@ -96,4 +93,4 @@ class iwitness : public eosio::contract {
 };
 
 // specify the contract name, and export a public action: update
-EOSIO_ABI( iwitness, (issue_certificate) )
+EOSIO_ABI( iwitness, (issuecert) )
